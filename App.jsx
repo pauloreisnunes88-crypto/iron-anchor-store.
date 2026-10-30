@@ -1,0 +1,32 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Anchor, ArrowUpRight, ShoppingBag, Menu, X, Instagram, Plus } from 'lucide-react';
+
+const products = [
+ {id:1,name:'The Anchor Flash',type:'ART PRINT · 12 × 16 IN',price:28,tag:'BEST SELLER',art:'anchor'},
+ {id:2,name:'Lucky Swallow Pin',type:'ENAMEL PIN',price:14,tag:'LIMITED RUN',art:'swallow'},
+ {id:3,name:'Rose & Dagger',type:'ART PRINT · 11 × 14 IN',price:32,tag:'NEW DROP',art:'rose'},
+ {id:4,name:'Panther Sticker Pack',type:'VINYL · 3 PIECES',price:12,tag:'SHOP FAVORITE',art:'panther'}
+];
+function Motif({kind}) { return <div className={'motif '+kind}><span>{kind==='anchor'?'⚓':kind==='swallow'?'✦':kind==='rose'?'✿':'♠'}</span><small>IRON ANCHOR</small></div> }
+export default function App(){
+ const [cart,setCart]=useState([]),[menu,setMenu]=useState(false),[notice,setNotice]=useState('');
+ const add=(p)=>{setCart([...cart,p]);setNotice(p.name+' added to your bag');setTimeout(()=>setNotice(''),2200)};
+ return <div className="site">
+  <div className="announcement">INDEPENDENT TATTOO GOODS · MADE WITH OLD-SCHOOL SOUL</div>
+  <header className="header"><a className="logo" href="#"><Anchor size={25}/><span>IRON<span className="red"> ANCHOR</span><small>TATTOO SUPPLY & GOODS</small></span></a>
+   <nav className={menu?'nav open':'nav'}><a href="#shop" onClick={()=>setMenu(false)}>SHOP</a><a href="#flash" onClick={()=>setMenu(false)}>FLASH ART</a><a href="#artist" onClick={()=>setMenu(false)}>THE ARTIST</a><a href="#story" onClick={()=>setMenu(false)}>OUR STORY</a></nav>
+   <button className="bag" onClick={()=>setNotice(cart.length+' item(s) in your bag')}><ShoppingBag size={18}/> BAG ({cart.length})</button><button className="mobile" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
+  </header>
+  <main>
+   <section className="hero"><div className="hero-copy"><p className="eyebrow">EST. IN INK · BUILT TO LAST</p><h1>BUILT ON<br/><em>TRADITION.</em></h1><p className="hero-text">Old-school tattoo spirit. Independent goods. A little rebellion in everything we make.</p><a className="primary" href="#shop">SHOP THE COLLECTION <ArrowUpRight size={17}/></a><div className="hero-note"><span>01 / 04</span><i/> AMERICAN TRADITIONAL, ALWAYS.</div></div><div className="hero-art"><div className="sun"></div><div className="hero-stamp">NO<br/>REGRETS</div><div className="hero-anchor">⚓</div><div className="hero-caption">BOLD LINES. TIMELESS STORIES.</div></div></section>
+   <div className="ticker"><span>TRUE TO THE ROOTS ✳ MADE FOR THE FEARLESS ✳ KEEP THE TRADITION ALIVE ✳ </span></div>
+   <section className="shop section" id="shop"><div className="section-head"><div><p className="eyebrow">THE GOODS</p><h2>FRESH FROM<br/><em>THE WORKSHOP.</em></h2></div><p>Objects with character. Designed for those who carry the art beyond the skin.</p></div><div className="products">{products.map((p,i)=><motion.article className="product" key={p.id} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.08}}><div className="product-art"><span className="tag">{p.tag}</span><Motif kind={p.art}/><button className="add" onClick={()=>add(p)}><Plus size={19}/></button></div><div className="product-info"><div><h3>{p.name}</h3><p>{p.type}</p></div><strong>${p.price}</strong></div></motion.article>)}</div></section>
+   <section className="flash section" id="flash"><div className="flash-art"><div className="flash-card"><span>FLASH SHEET Nº 01</span><b>⚓</b><strong>STAY<br/>TRUE</strong><small>IRON ANCHOR · TRADITIONAL TATTOO</small></div></div><div className="flash-copy"><p className="eyebrow">INK THAT NEVER FADES</p><h2>THE ART OF<br/><em>OLD SCHOOL.</em></h2><p>Bold outlines. Honest color. Stories worth carrying. Explore original flash-inspired artwork rooted in the golden age of tattooing.</p><a className="outline" href="#shop">EXPLORE FLASH ART <ArrowUpRight size={16}/></a></div></section>
+   <section className="artist section" id="artist"><p className="eyebrow">BEHIND THE NEEDLE</p><h2>ONE ARTIST.<br/><em>ONE TRADITION.</em></h2><p className="artist-text">IRON ANCHOR is built around the craft, the culture, and the people who keep traditional tattooing alive. Meet the artist, discover the work, and book your next piece.</p><a className="primary" href="mailto:hello@ironanchor.com">GET IN TOUCH <ArrowUpRight size={17}/></a></section>
+   <section className="story section" id="story"><div><p className="eyebrow">OUR CODE</p><h2>RESPECT THE<br/><em>ROOTS.</em></h2></div><p>No shortcuts. No trends to chase. Just timeless imagery, quality goods, and a deep respect for the artists who came before us. Welcome to IRON ANCHOR.</p></section>
+  </main>
+  <footer><a className="logo" href="#"><Anchor size={23}/><span>IRON<span className="red"> ANCHOR</span><small>TATTOO SUPPLY & GOODS</small></span></a><p>© 2026 IRON ANCHOR. KEEP THE TRADITION ALIVE.</p><a href="#top"><Instagram size={19}/></a></footer>
+  {notice&&<div className="toast">{notice}</div>}
+ </div>
+}

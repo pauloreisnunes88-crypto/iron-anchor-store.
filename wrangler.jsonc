@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "iron-anchor-store",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-29",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  "d1_databases": [{ "binding": "DB", "database_name": "iron-anchor-db", "database_id": "REPLACE_WITH_D1_DATABASE_ID" }],
+  "r2_buckets": [{ "binding": "ARTWORKS", "bucket_name": "iron-anchor-artworks" }],
+  "vars": { "PUBLIC_STORE_NAME": "IRON ANCHOR" }
+}
